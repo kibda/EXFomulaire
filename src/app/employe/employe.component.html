@@ -1,0 +1,44 @@
+<h1>Ajout d'un employé</h1>
+<form #f="ngForm" (ngSubmit)="onsubmit(f)" >
+
+    <label >
+        Donner le matricule   </label>
+        <input type="number" name="mat"  class="form-control" [(ngModel)]="e.matricule" #mat="ngModel" pattern="[1-9]{3}" >
+        <div *ngIf="mat.errors?.pattern && mat.dirty" class="alert alert-warning" role="alert">
+            le format du matricule est erroné
+          </div>
+  
+
+    <label >
+        Donner le nom </label>
+        <input type="text"  name="nom"  class="form-control" [(ngModel)]="e.nom" #nom="ngModel" pattern="[A-Z][a-z]+\s[A-Z][a-z]+" required>
+        <div *ngIf="nom.errors?.required && nom.touched" class="alert alert-danger" role="alert">
+          le nom est obligatoire
+          </div>
+          <div *ngIf="nom.errors?.pattern && nom.dirty" class="alert alert-warning" role="alert">
+            le format du nom est faux
+          </div>
+    
+<div>
+    <label >
+        Donner la fonction</label>
+        <select name="fct" class="form-control" [(ngModel)]="e.fonction" >
+            <option *ngFor="let t of fonction" >{{t}}</option>
+        </select>
+    </div>
+
+    <label > choisir le departement </label> <br>
+    <input type="radio" name="dep" value="TI" [(ngModel)]="e.departement" > TI   
+    <input type="radio" name="dep" value="Finance" [(ngModel)]="e.departement"> Finance
+
+    <div>
+<input type="submit" value="ajouter Employé" [disabled]="f.invalid" class="btn btn-primary"  >
+<input type="button" value="vider" (click)="onreset(f)" class="btn btn-secondary">
+
+    </div>
+
+</form>
+
+<div *ngIf="exst" >
+    cet employe existe deja 
+</div>
